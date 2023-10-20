@@ -30,10 +30,11 @@ const client = new MongoClient(uri, {
 async function run() {
     try {
         // Connect the client to the server	(optional starting in v4.7)
-        await client.connect();
+        //await client.connect();
 
         const brandsCollection = client.db('brandDB').collection('brands');
         const productsCollection = client.db('brandDB').collection('products');
+        const imagesCollection = client.db('brandDB').collection('images');
 
         app.post('/brands', async(req, res) => {
             const newBrand = req.body;
@@ -75,6 +76,21 @@ async function run() {
             const result = await productsCollection.findOne(query);
             res.send(result);
         })
+
+        app.get('/images', async(req, res) => {
+            const cursor = imagesCollection.find({});
+            const images = await cursor.toArray();
+            res.send(images);
+        })
+
+        app.get('/images/:brand', async(req, res) => {
+            const brand = req.params.brand;
+            const query = { brand: brand };
+            const result = await imagesCollection.findOne(query);
+            res.send(result);
+        })
+        
+
 
         app.put('/products/:id', async(req, res) => {
             const id = req.params.id;
