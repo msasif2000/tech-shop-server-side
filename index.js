@@ -1,7 +1,7 @@
+require('dotenv').config()
 const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 const express = require('express');
 var cors = require('cors')
-require('dotenv').config()
 const app = express();
 const port = 5001;
 
@@ -13,8 +13,6 @@ app.use(express.json());
 app.get('/', (req, res) => {
     res.send('Hello World! How are you?');
 })
-
-
 
 
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_Pass}@cluster0.alzohbu.mongodb.net/?retryWrites=true&w=majority`;
@@ -30,7 +28,7 @@ const client = new MongoClient(uri, {
 async function run() {
     try {
         // Connect the client to the server	(optional starting in v4.7)
-        await client.connect();
+        //await client.connect();
 
         const brandsCollection = client.db('brandDB').collection('brands');
         const productsCollection = client.db('brandDB').collection('products');
